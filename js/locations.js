@@ -20,8 +20,19 @@ import {getResultsApi} from './utils/getDataApi.js';
   };
   makeCards(dataLocations);
   const moreBtn = document.querySelector(".more-btn");
+  const filterInp = document.querySelector(".filter-input");
   let count = 2;
   moreBtn.addEventListener("click", async () => {
+    filterInp.value = null;
+    const categories = document.querySelectorAll('.section-container')
+    for (const category of categories) {
+      const cardsList = category.querySelector('.cards-list')
+      const cardsItem = cardsList.getElementsByTagName('li')
+      for (let i = 0; i < cardsItem.length; i++) {
+      cardsItem[i].style.display = "flex"
+      }
+    }
+    
     const makeMore = async (Arr) => {
       Arr = await getResultsApi.getData(
         API_URL + URL_LOCATION + "/?page=" + count
@@ -29,6 +40,6 @@ import {getResultsApi} from './utils/getDataApi.js';
       makeCards(Arr);
     };
     makeMore(dataLocations);
-    count++;
+    count++;      
   });
 })();
